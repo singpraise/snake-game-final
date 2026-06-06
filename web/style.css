@@ -126,6 +126,150 @@ h1 {
   margin-bottom: 8px;
 }
 
+/* ── Game page info layout: 左 20% / 中 60% / 右 20%，下方 Tech Stack 100% ── */
+.game-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.info-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.remote-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.remote-card h2 {
+  margin: 4px 0 8px;
+  font-size: 0.95rem;
+}
+
+.remote-card .mode-row {
+  margin-bottom: 10px;
+}
+
+.remote-card .control-list {
+  margin-bottom: 0;
+}
+
+/* 中間：方向鍵十字（直覺對應上下左右） */
+.info-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(96, 165, 250, 0.06);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.info-col-center > h2 {
+  align-self: flex-start;
+}
+
+.dpad-guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(70px, 1fr));
+  grid-template-areas:
+    ". up ."
+    "left down right";
+  gap: 10px;
+  margin: 8px 0 16px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.dpad-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.dpad-cell.up    { grid-area: up; }
+.dpad-cell.left  { grid-area: left; }
+.dpad-cell.down  { grid-area: down; }
+.dpad-cell.right { grid-area: right; }
+
+.dpad-cell.down {
+  border-color: var(--accent-2);
+  background: rgba(96, 165, 250, 0.12);
+}
+
+.action-keys {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.action-keys span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-col-right .legend {
+  margin-bottom: 0;
+}
+
+/* 最下方 Tech Stack：橫向鋪滿 */
+.info-techstack {
+  border-top: 1px solid var(--panel-border);
+  padding-top: 16px;
+}
+
+.info-techstack h2 {
+  margin: 0 0 12px;
+}
+
+.info-techstack .tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-techstack .tech-list li {
+  padding: 6px 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 760px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .panel {
   background: rgba(18, 26, 47, 0.92);
   border: 1px solid var(--panel-border);

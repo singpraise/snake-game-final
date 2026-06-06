@@ -42,62 +42,68 @@
         <p class="hint">Click the game screen, then use keyboard. Touch devices can use the buttons below.</p>
       </section>
 
-      <aside class="panel info-panel">
-        <div class="info-block">
-          <h2>Mode</h2>
-          <div class="mode-row">
-            <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
-            <label><input type="radio" name="mode" value="classic"> Classic</label>
+      <aside class="panel info-panel game-info">
+        <div class="info-grid">
+          <div class="info-col-left">
+            <div class="remote-card">
+              <h2>Mode</h2>
+              <div class="mode-row">
+                <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
+                <label><input type="radio" name="mode" value="classic"> Classic</label>
+              </div>
+              <h2>Speed</h2>
+              <div class="mode-row" id="difficulty-row">
+                <label><input type="radio" name="diff" value="0"> 簡單</label>
+                <label><input type="radio" name="diff" value="1" checked> 中間</label>
+                <label><input type="radio" name="diff" value="2"> 更難</label>
+                <label><input type="radio" name="diff" value="3"> 最難</label>
+              </div>
+            </div>
+
+            <div class="remote-card">
+              <h2>Level Editor</h2>
+              <ul class="control-list">
+                <li><kbd>1-5</kbd> Select tool</li>
+                <li><kbd>W X A D</kbd> Move cursor</li>
+                <li><kbd>Space</kbd> Place tile</li>
+                <li><kbd>H</kbd> Snake direction</li>
+                <li><kbd>S</kbd> Save | <kbd>L</kbd> Load</li>
+                <li><kbd>T</kbd> Test play level</li>
+              </ul>
+            </div>
           </div>
-          <h2>Speed</h2>
-          <div class="mode-row" id="difficulty-row">
-            <label><input type="radio" name="diff" value="0"> 簡單</label>
-            <label><input type="radio" name="diff" value="1" checked> 中間</label>
-            <label><input type="radio" name="diff" value="2"> 更難</label>
-            <label><input type="radio" name="diff" value="3"> 最難</label>
+
+          <div class="info-col-center">
+            <h2>Controls</h2>
+            <div class="dpad-guide">
+              <div class="dpad-cell up"><kbd>W</kbd><kbd>↑</kbd><span>Up</span></div>
+              <div class="dpad-cell left"><kbd>A</kbd><kbd>←</kbd><span>Left</span></div>
+              <div class="dpad-cell down"><kbd>S</kbd><kbd>↓</kbd><span>Down</span></div>
+              <div class="dpad-cell right"><kbd>D</kbd><kbd>→</kbd><span>Right</span></div>
+            </div>
+            <div class="action-keys">
+              <span><kbd>U</kbd> Undo</span>
+              <span><kbd>P</kbd> Pause</span>
+              <span><kbd>R</kbd> Restart</span>
+              <span><kbd>M</kbd> Mute</span>
+              <span><kbd>Q</kbd> Quit loop</span>
+            </div>
+          </div>
+
+          <div class="info-col-right">
+            <h2>Legend</h2>
+            <ul class="legend">
+              <li><span class="glyph">@</span> Head</li>
+              <li><span class="glyph">o</span> Body</li>
+              <li><span class="glyph">*</span> Food (+10)</li>
+              <li><span class="glyph">$</span> Bonus (+30)</li>
+              <li><span class="glyph">#</span> Obstacle</li>
+              <li><span class="glyph">.</span> Empty</li>
+            </ul>
           </div>
         </div>
 
-        <div class="info-block">
-          <h2>Controls</h2>
-          <ul class="control-list">
-            <li><kbd>W</kbd> <kbd>↑</kbd> Up</li>
-            <li><kbd>S</kbd> <kbd>↓</kbd> Down</li>
-            <li><kbd>A</kbd> <kbd>←</kbd> Left</li>
-            <li><kbd>D</kbd> <kbd>→</kbd> Right</li>
-            <li><kbd>U</kbd> Undo</li>
-            <li><kbd>P</kbd> Pause</li>
-            <li><kbd>R</kbd> Restart</li>
-            <li><kbd>M</kbd> Mute sound</li>
-            <li><kbd>Q</kbd> Quit loop</li>
-          </ul>
-        </div>
-
-        <div class="info-block">
-          <h2>Level Editor</h2>
-          <ul class="control-list">
-            <li><kbd>1-5</kbd> Select tool</li>
-            <li><kbd>W X A D</kbd> Move cursor</li>
-            <li><kbd>Space</kbd> Place tile</li>
-            <li><kbd>H</kbd> Snake direction</li>
-            <li><kbd>S</kbd> Save | <kbd>L</kbd> Load</li>
-            <li><kbd>T</kbd> Test play level</li>
-          </ul>
-        </div>
-
-        <div class="info-block">
-          <h2>Legend</h2>
-          <ul class="legend">
-            <li><span class="glyph">@</span> Head</li>
-            <li><span class="glyph">o</span> Body</li>
-            <li><span class="glyph">*</span> Food (+10)</li>
-            <li><span class="glyph">$</span> Bonus (+30)</li>
-            <li><span class="glyph">#</span> Obstacle</li>
-            <li><span class="glyph">.</span> Empty</li>
-          </ul>
-        </div>
-
-        <div class="info-block">
+        <div class="info-techstack">
           <h2>Tech Stack</h2>
           <ul class="tech-list">
             <li>Pointer &amp; malloc/free</li>
