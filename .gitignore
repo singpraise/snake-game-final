@@ -1,3 +1,7 @@
+# Python
+__pycache__/
+*.pyc
+
 # Native build
 snake.exe
 *.o
