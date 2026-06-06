@@ -189,7 +189,7 @@ h1 {
   gap: 8px;
   margin: 6px auto 12px;
   width: 100%;
-  max-width: 270px;
+  max-width: 243px;
 }
 
 .dpad-cell {
@@ -199,8 +199,8 @@ h1 {
   justify-content: center;
   gap: 2px;
   min-width: 0;
-  min-height: 58px;
-  padding: 8px 6px;
+  min-height: 52px;
+  padding: 7px 5px;
   border: 1px solid #93c5fd;
   border-radius: 14px;
   background: linear-gradient(160deg, #3b82f6, #2563eb);
@@ -228,13 +228,13 @@ h1 {
 .dpad-cell.right { grid-area: right; }
 
 .dpad-arrow {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 2.7vw, 1.26rem);
   line-height: 1;
   font-weight: 700;
 }
 
 .dpad-name {
-  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.8vw, 0.81rem);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -279,6 +279,12 @@ h1 {
 
 .action-key:active {
   transform: scale(0.96);
+}
+
+.action-break {
+  flex-basis: 100%;
+  width: 100%;
+  height: 0;
 }
 
 .info-col-right .legend {
