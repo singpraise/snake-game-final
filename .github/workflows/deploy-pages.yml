@@ -40,6 +40,7 @@ jobs:
       - name: Build WASM
         run: |
           emcc --version
+          sed -i 's/\r$//' build_web.sh
           bash build_web.sh
 
       - name: Verify web build output

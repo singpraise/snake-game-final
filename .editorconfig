@@ -3,8 +3,13 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = crlf
 insert_final_newline = true
+
+[*.{sh,yml}]
+end_of_line = lf
+
+[*.{c,h,bat,txt,md}]
+end_of_line = crlf
 
 [*.{c,h}]
 charset = utf-8
