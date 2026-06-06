@@ -322,16 +322,17 @@ h1 {
   }
 
   .info-col-center {
+    order: -1;            /* 遙控器移到主畫面正下方 */
     padding: 16px 12px;
   }
 
   .dpad-guide {
-    max-width: 280px;
+    max-width: 100%;      /* 跟主畫面一樣寬 */
     gap: 10px;
   }
 
   .dpad-cell {
-    min-height: 72px;
+    min-height: 80px;
     border-radius: 14px;
   }
 
@@ -346,15 +347,14 @@ h1 {
   }
 }
 
-/* 小手機：再縮一階，避免任何橫向溢出 */
+/* 小手機：縮小間距與內距，維持滿版不溢出 */
 @media (max-width: 380px) {
   .dpad-guide {
-    max-width: 240px;
     gap: 8px;
   }
 
   .dpad-cell {
-    min-height: 64px;
+    min-height: 72px;
     padding: 8px 4px;
   }
 }
