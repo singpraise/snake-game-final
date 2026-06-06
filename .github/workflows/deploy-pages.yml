@@ -10,10 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-env:
-  EM_VERSION: 3.1.64
-  EM_CACHE_FOLDER: emsdk-cache
-
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -26,14 +22,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Emscripten
-        uses: emscripten-core/setup-emsdk@v15
+        uses: mymindstorm/setup-emsdk@v14
         with:
-          version: ${{ env.EM_VERSION }}
-          actions-cache-folder: ${{ env.EM_CACHE_FOLDER }}
+          version: 3.1.64
 
       - name: Build WASM
         run: |
-          source "${EMSDK}/emsdk_env.sh"
+          which emcc
           emcc --version
           emcc -std=c99 -Wall -Wextra -O2 \
             main_web.c platform_web.c \
@@ -43,8 +38,8 @@ jobs:
             -s ENVIRONMENT=web \
             -s NO_EXIT_RUNTIME=1 \
             -s ALLOW_MEMORY_GROWTH=1 \
-            -s EXPORTED_FUNCTIONS='["_malloc","_free","_main","_web_send_key","_web_restart","_web_set_mode","_web_start_editor","_web_get_score","_web_is_game_over","_web_get_mode_name","_web_load_level_text"]' \
-            -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap","UTF8ToString","lengthBytesUTF8","stringToUTF8"]' \
+            -s "EXPORTED_FUNCTIONS=[\"_malloc\",\"_free\",\"_main\",\"_web_send_key\",\"_web_restart\",\"_web_set_mode\",\"_web_start_editor\",\"_web_get_score\",\"_web_is_game_over\",\"_web_get_mode_name\",\"_web_load_level_text\"]" \
+            -s "EXPORTED_RUNTIME_METHODS=[\"ccall\",\"cwrap\",\"UTF8ToString\",\"lengthBytesUTF8\",\"stringToUTF8\"]" \
             -s ASSERTIONS=1
 
       - name: Verify web build output
