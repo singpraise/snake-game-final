@@ -365,6 +365,7 @@ void game_render(const GameState *game)
         for (int x = 0; x < game->width; x++) {
             Cell cell = board_get(game->board, x, y);
             putchar(board_cell_to_char(cell));
+            putchar(' '); /* 每格加空白，讓盤面寬度貼近 HUD 文字、向右對齊滿版 */
         }
         putchar('\n');
     }

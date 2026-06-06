@@ -30,9 +30,9 @@ static void restart_game(void)
     }
 
     if (g_mode == MODE_ENHANCED) {
-        game = game_create_enhanced(20, 15, 3, g_difficulty);
+        game = game_create_enhanced(32, 16, 3, g_difficulty);
     } else {
-        game = game_create_classic(20, 15, 3, g_difficulty);
+        game = game_create_classic(32, 16, 3, g_difficulty);
     }
 }
 
