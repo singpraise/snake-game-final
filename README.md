@@ -1,6 +1,6 @@
 # 專題名稱：C 語言貪食蛇遊戲 Final
 
-> **C Snake Game Final** — 強化完整版（音效、關卡編輯器、四段速度、GitHub Pages 網頁版）
+> **C Snake Game Final** — 強化完整版（音效、關卡編輯器、多段速度、可點擊遙控器、RWD 網頁版、GitHub Pages 部署）
 
 > 本專案為獨立 Repository **`snake-game-final`**，不會覆蓋舊版 [`snake-game`](https://github.com/singpraise/snake-game)。
 
@@ -71,7 +71,7 @@
 | 障礙物 `#` | 地圖上隨機障礙，撞到即 Game Over |
 | 關卡升級 | 每吃 3 個食物升一級，速度加快 |
 | 獎勵食物 `$` | 20% 機率出現，+30 分（一般食物 +10） |
-| 速度四段 | **簡單 / 中間 / 更難 / 最難**（Classic 與 Enhanced 皆可選） |
+| 速度難度 | 網頁版提供 **簡單 / 中間 / 更難** 三段（Classic 與 Enhanced 皆可選；C 核心另保留 Extreme 段） |
 | 暫停 `P` | 隨時暫停與繼續 |
 | 最高分 | Windows 存檔 / 瀏覽器 localStorage |
 
@@ -518,10 +518,16 @@ python -m http.server 8080
 ```
 web/
 ├── index.html    # 遊戲頁面 + GitHub 連結
-├── style.css     # 樣式
+├── style.css     # 樣式（RWD）
 ├── snake.js      # Emscripten 輸出（建置後產生）
 └── snake.wasm    # WebAssembly 二進位（建置後產生）
 ```
+
+### 6.5 網頁版 UI 特色
+
+- **響應式版面（RWD）**：桌機為 `Mode/Speed`（左）、`Controls` 遙控器（中）、`Legend`（右）三欄，`Level Editor` 與 `Tech Stack` 以深灰底白字橫放於下方；手機自動改為單欄堆疊，遙控器置於主畫面下方並滿版。
+- **可點擊遙控器**：中央方向鍵十字為亮藍對比按鈕，**直接點擊即可控制蛇**（觸控裝置無需鍵盤）。
+- **滿版遊戲畫面**：盤面每格加空白並加寬為 `32×16`，使其顯示寬度與上方 HUD 文字對齊、填滿面板寬度；字體以 `clamp()` 隨螢幕自適應。
 
 ---
 
@@ -537,6 +543,8 @@ web/
 | `P` | 暫停 / 繼續 |
 | `R` | 重新開始（保留目前模式） |
 | `Q` | 離開遊戲 |
+
+> 網頁版可直接**點擊中央方向鍵遙控器**控制蛇；`Restart`、`Sound` 也可用頁面上方按鈕操作。
 
 **規則：**
 - 吃到食物（`*`）→ 分數 +10，蛇身 +1
@@ -593,8 +601,8 @@ pacman -S mingw-w64-ucrt-x86_64-gcc
 
 | 參數 | 預設值 | 定義位置 |
 |------|--------|----------|
-| 地圖寬度 | 20 | `main.c` → `game_create(20, 15, 3)` |
-| 地圖高度 | 15 | 同上 |
+| 地圖寬度 | 20（原生）/ 32（網頁） | `main.c` → `game_create(20, 15, 3)`；`main_web.c` → `32, 16` |
+| 地圖高度 | 15（原生）/ 16（網頁） | 同上 |
 | 初始蛇長 | 3 | 同上 |
 | 每幀間隔 | 120 ms | `main.c` → `GAME_TICK_MS` |
 | Undo 上限 | 50 步 | `stack.h` → `UNDO_STACK_MAX` |
