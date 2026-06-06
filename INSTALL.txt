@@ -1,0 +1,81 @@
+========================================
+  Install C Compiler on Windows
+========================================
+
+Your build failed because gcc is not installed.
+Follow ONE option below.
+
+----------------------------------------
+OPTION A: MSYS2 (Recommended)
+----------------------------------------
+
+1. Download and install MSYS2:
+   https://www.msys2.org/
+
+2. Open "MSYS2 MINGW64" from Start Menu (NOT MSYS2 MSYS)
+
+3. Install gcc:
+   pacman -S mingw-w64-x86_64-gcc
+
+4. Add compiler to Windows PATH:
+   - Press Win + S, search "Environment Variables"
+   - Edit "Path" under User variables
+   - Add new entry:
+     C:\msys64\mingw64\bin
+   - Click OK on all dialogs
+
+5. CLOSE and REOPEN PowerShell (important!)
+
+6. Verify:
+   gcc --version
+
+7. Build game:
+   cd "C:\Users\Lenovo\Documents\C_Joyce Wan\snake"
+   .\build.bat
+   .\snake.exe
+
+----------------------------------------
+OPTION B: WinLibs (Portable)
+----------------------------------------
+
+1. Go to https://winlibs.com/
+2. Download "GCC" UCRT runtime, 64-bit, without LLVM/Clang
+3. Extract ZIP to e.g. C:\winlibs
+4. Add C:\winlibs\...\bin to PATH
+5. Restart PowerShell, run build.bat
+
+----------------------------------------
+OPTION C: Visual Studio
+----------------------------------------
+
+1. Install Visual Studio Community (free)
+2. Select workload: "Desktop development with C++"
+3. Open "x64 Native Tools Command Prompt for VS"
+4. cd to snake folder
+5. Run: build_msvc.bat
+6. Run: snake.exe
+
+----------------------------------------
+GIT BASH / MSYS2 TERMINAL
+----------------------------------------
+
+Do NOT use .\build.bat in Git Bash (that is PowerShell syntax).
+
+Use instead:
+  cd "/c/Users/Lenovo/Documents/C_Joyce Wan/snake"
+  bash build.sh
+  ./snake.exe
+
+Or:
+  cmd //c build.bat
+
+----------------------------------------
+RUN THE GAME
+----------------------------------------
+
+Git Bash:    ./snake.exe
+PowerShell:  .\snake.exe
+cmd:         snake.exe
+Double-click: run.bat
+
+Controls: WASD / Arrows, U=Undo, Q=Quit

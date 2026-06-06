@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Snake Game Final — Flask + WASM</title>
+  <meta name="description" content="C Snake Game Final with Flask backend and WebAssembly game engine.">
+  <meta name="github-repo" content="https://github.com/singpraise/snake-game-final">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Flask · C Language · WebAssembly</p>
+        <h1>C Snake Game Final</h1>
+        <p class="subtitle">
+          Flask 後端負責路由、關卡 API、伺服器排行榜；遊戲核心仍為 C 語言 WASM。
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a id="github-link" class="btn btn-github" href="https://github.com/singpraise/snake-game-final" target="_blank" rel="noopener noreferrer">
+          View on GitHub
+        </a>
+        <button id="btn-editor" class="btn btn-primary" type="button">Level Editor</button>
+        <button id="btn-restart" class="btn btn-primary" type="button">Restart</button>
+        <button id="btn-sound" class="btn btn-github" type="button">Sound: ON</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel game-panel">
+        <div class="panel-header">
+          <h2>Play</h2>
+          <span id="status-badge" class="badge">Loading WASM...</span>
+        </div>
+        <pre id="game-screen" class="terminal" aria-label="Snake game screen" tabindex="0"></pre>
+        <p class="hint">Flask 伺服器：http://127.0.0.1:5000 · 需先 build_web 產生 snake.js / snake.wasm</p>
+      </section>
+
+      <aside class="panel info-panel">
+        <h2>Flask Backend</h2>
+        <p id="flask-badge" class="badge">Checking API...</p>
+
+        <h2>Server Leaderboard</h2>
+        <label for="player-name">Player name</label>
+        <input id="player-name" class="text-input" type="text" maxlength="32" placeholder="Your name" value="Player">
+        <button id="btn-submit-score" class="btn btn-primary btn-block" type="button">Submit Score to Server</button>
+        <ol id="server-scores" class="score-list"></ol>
+
+        <h2>Custom Levels (API)</h2>
+        <select id="level-select" class="text-input"></select>
+        <button id="btn-load-level" class="btn btn-primary btn-block" type="button">Load Level into Game</button>
+
+        <h2>Level Editor (Flask)</h2>
+        <label for="level-filename">Filename</label>
+        <input id="level-filename" class="text-input" type="text" maxlength="64" placeholder="mylevel.lvl" value="example.lvl">
+        <textarea id="level-content" class="level-editor" rows="14" spellcheck="false" placeholder="# C Snake Level v1&#10;name=My Level&#10;width=20&#10;height=15&#10;---&#10;...................."></textarea>
+        <button id="btn-fetch-level" class="btn btn-github btn-block" type="button">Load Selected to Editor</button>
+        <button id="btn-save-level" class="btn btn-primary btn-block" type="button">Save Level to Server</button>
+
+        <h2>Mode</h2>
+        <div class="mode-row">
+          <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
+          <label><input type="radio" name="mode" value="classic"> Classic</label>
+        </div>
+        <h2>Speed</h2>
+        <div class="mode-row" id="difficulty-row">
+          <label><input type="radio" name="diff" value="0"> 簡單</label>
+          <label><input type="radio" name="diff" value="1" checked> 中間</label>
+          <label><input type="radio" name="diff" value="2"> 更難</label>
+          <label><input type="radio" name="diff" value="3"> 最難</label>
+        </div>
+
+        <h2>Controls</h2>
+        <ul class="control-list">
+          <li><kbd>W</kbd> <kbd>↑</kbd> Up · <kbd>S</kbd> <kbd>↓</kbd> Down</li>
+          <li><kbd>A</kbd> <kbd>←</kbd> Left · <kbd>D</kbd> <kbd>→</kbd> Right</li>
+          <li><kbd>U</kbd> Undo · <kbd>P</kbd> Pause · <kbd>M</kbd> Mute</li>
+        </ul>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>Flask: <code>python app.py</code> · WASM: <code>bash build_web.sh</code> · Native: <code>build.bat</code></p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='flask_api.js') }}"></script>
+  <script>
+    window.snakeAudio = {
+      enabled: true, ctx: null,
+      play: function (id) {
+        if (!this.enabled) return;
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!this.ctx) this.ctx = new AudioCtx();
+        var ctx = this.ctx;
+        var tones = [[880, 0.08], [1175, 0.1], [700, 0.08], [220, 0.2], [520, 0.06]];
+        var tone = tones[id] || [440, 0.08];
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'square'; osc.frequency.value = tone[0]; gain.gain.value = 0.05;
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + tone[1]);
+      }
+    };
+
+    var Module = {
+      print: (function () {
+        var el = document.getElementById('game-screen');
+        return function (text) { if (el) el.textContent += text + '\n'; };
+      })(),
+      printErr: function (text) { console.error(text); },
+      setStatus: function (text) {
+        var badge = document.getElementById('status-badge');
+        if (badge) badge.textContent = text;
+      },
+      onRuntimeInitialized: function () {
+        Module.setStatus('Running');
+        applyMode();
+      }
+    };
+
+    function applyMode() {
+      if (!Module._web_set_mode) return;
+      var mode = document.querySelector('input[name="mode"]:checked').value;
+      var diff = parseInt(document.querySelector('input[name="diff"]:checked').value, 10);
+      Module._web_set_mode(mode === 'classic' ? 0 : 1, diff);
+    }
+
+    function bindControls() {
+      document.querySelectorAll('input[name="mode"], input[name="diff"]').forEach(function (el) {
+        el.addEventListener('change', applyMode);
+      });
+      var screen = document.getElementById('game-screen');
+      screen.addEventListener('keydown', function (e) {
+        if (!Module._web_send_key) return;
+        e.preventDefault();
+        var code;
+        switch (e.key) {
+          case 'ArrowUp': code = 38; break;
+          case 'ArrowDown': code = 40; break;
+          case 'ArrowLeft': code = 37; break;
+          case 'ArrowRight': code = 39; break;
+          default:
+            if (e.key.length === 1) code = e.key.toUpperCase().charCodeAt(0);
+            else return;
+        }
+        Module._web_send_key(code);
+      });
+      document.getElementById('btn-restart').addEventListener('click', function () {
+        if (Module._web_restart) Module._web_restart();
+      });
+      document.getElementById('btn-editor').addEventListener('click', function () {
+        if (Module._web_start_editor) { Module._web_start_editor(); Module.setStatus('Editor'); }
+      });
+      document.getElementById('btn-sound').addEventListener('click', function () {
+        window.snakeAudio.enabled = !window.snakeAudio.enabled;
+        this.textContent = window.snakeAudio.enabled ? 'Sound: ON' : 'Sound: OFF';
+        if (Module._web_send_key) Module._web_send_key(77);
+      });
+    }
+    bindControls();
+  </script>
+  <script src="{{ url_for('static', filename='snake.js') }}" async></script>
+</body>
+</html>

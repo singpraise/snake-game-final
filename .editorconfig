@@ -1,0 +1,13 @@
+# Project sources use UTF-8 (no BOM)
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+
+[*.{c,h}]
+charset = utf-8
+
+[*.{bat,txt}]
+charset = utf-8

@@ -1,0 +1,70 @@
+name: Build and Deploy Web Game
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Emscripten
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git ../emsdk
+          cd ../emsdk
+          ./emsdk install latest
+          ./emsdk activate latest
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+          echo "$PWD/upstream/bin" >> $GITHUB_PATH
+
+      - name: Activate Emscripten
+        run: |
+          source "$EMSDK/emsdk_env.sh"
+          emcc --version
+          bash build_web.sh
+
+      - name: Verify web build output
+        run: |
+          test -f web/index.html
+          test -f web/snake.js
+          test -f web/snake.wasm
+          echo "Web build OK"
+
+      - name: Inject GitHub repository link
+        run: |
+          REPO="${{ github.server_url }}/${{ github.repository }}"
+          sed -i "s|<head>|<head>\n  <meta name=\"github-repo\" content=\"${REPO}\">|" web/index.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

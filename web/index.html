@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Snake Game Final — WebAssembly</title>
+  <meta name="description" content="C Snake Game Final - enhanced snake with 4 speed levels, editor, and WebAssembly.">
+  <meta name="github-repo" content="https://github.com/singpraise/snake-game-final">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">C Language · WebAssembly</p>
+        <h1>C Snake Game Final</h1>
+        <p class="subtitle">
+          強化版新增障礙物、關卡加速、獎勵食物與最高分紀錄。
+          核心仍為 C 語言 Queue、Stack、2D Array 與 malloc/free。
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a id="github-link" class="btn btn-github" href="https://github.com/singpraise/snake-game-final" target="_blank" rel="noopener noreferrer">
+          View on GitHub
+        </a>
+        <button id="btn-editor" class="btn btn-primary" type="button">Level Editor</button>
+        <button id="btn-restart" class="btn btn-primary" type="button">Restart</button>
+        <button id="btn-sound" class="btn btn-github" type="button">Sound: ON</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel game-panel">
+        <div class="panel-header">
+          <h2>Play</h2>
+          <span id="status-badge" class="badge">Loading WASM...</span>
+        </div>
+        <pre id="game-screen" class="terminal" aria-label="Snake game screen" tabindex="0"></pre>
+        <p class="hint">Click the game screen, then use keyboard. Touch devices can use the buttons below.</p>
+      </section>
+
+      <aside class="panel info-panel">
+        <h2>Mode</h2>
+        <div class="mode-row">
+          <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
+          <label><input type="radio" name="mode" value="classic"> Classic</label>
+        </div>
+        <h2>Speed</h2>
+        <div class="mode-row" id="difficulty-row">
+          <label><input type="radio" name="diff" value="0"> 簡單</label>
+          <label><input type="radio" name="diff" value="1" checked> 中間</label>
+          <label><input type="radio" name="diff" value="2"> 更難</label>
+          <label><input type="radio" name="diff" value="3"> 最難</label>
+        </div>
+
+        <h2>Controls</h2>
+        <ul class="control-list">
+          <li><kbd>W</kbd> <kbd>↑</kbd> Up</li>
+          <li><kbd>S</kbd> <kbd>↓</kbd> Down</li>
+          <li><kbd>A</kbd> <kbd>←</kbd> Left</li>
+          <li><kbd>D</kbd> <kbd>→</kbd> Right</li>
+          <li><kbd>U</kbd> Undo</li>
+          <li><kbd>P</kbd> Pause</li>
+          <li><kbd>R</kbd> Restart</li>
+          <li><kbd>M</kbd> Mute sound</li>
+          <li><kbd>Q</kbd> Quit loop</li>
+        </ul>
+
+        <h2>Level Editor</h2>
+        <ul class="control-list">
+          <li><kbd>1-5</kbd> Select tool</li>
+          <li><kbd>W X A D</kbd> Move cursor</li>
+          <li><kbd>Space</kbd> Place tile</li>
+          <li><kbd>H</kbd> Snake direction</li>
+          <li><kbd>S</kbd> Save | <kbd>L</kbd> Load</li>
+          <li><kbd>T</kbd> Test play level</li>
+        </ul>
+
+        <h2>Legend</h2>
+        <ul class="legend">
+          <li><span class="glyph">@</span> Head</li>
+          <li><span class="glyph">o</span> Body</li>
+          <li><span class="glyph">*</span> Food (+10)</li>
+          <li><span class="glyph">$</span> Bonus (+30)</li>
+          <li><span class="glyph">#</span> Obstacle</li>
+          <li><span class="glyph">.</span> Empty</li>
+        </ul>
+
+        <h2>Tech Stack</h2>
+        <ul class="tech-list">
+          <li>Pointer &amp; malloc/free</li>
+          <li>Queue (body + input)</li>
+          <li>Stack (undo)</li>
+          <li>2D Array board</li>
+          <li>Emscripten → WASM</li>
+        </ul>
+      </aside>
+    </main>
+
+    <section class="touch-controls" aria-label="Touch controls">
+      <button type="button" class="touch-btn" data-key="85">U</button>
+      <div class="dpad">
+        <button type="button" class="touch-btn" data-key="38">↑</button>
+        <div class="dpad-row">
+          <button type="button" class="touch-btn" data-key="37">←</button>
+          <button type="button" class="touch-btn" data-key="40">↓</button>
+          <button type="button" class="touch-btn" data-key="39">→</button>
+        </div>
+      </div>
+      <button type="button" class="touch-btn" data-key="80">P</button>
+      <button type="button" class="touch-btn" data-key="82">R</button>
+    </section>
+
+    <footer class="footer">
+      <p>Native Windows build: compile with <code>build.bat</code> · Web build: <code>build_web.sh</code></p>
+    </footer>
+  </div>
+
+  <script>
+    (function setupGithubLink() {
+      var meta = document.querySelector('meta[name="github-repo"]');
+      var repo = meta ? meta.getAttribute('content') : '';
+      if (!repo && window.location.hostname.endsWith('github.io')) {
+        var parts = window.location.pathname.split('/').filter(Boolean);
+        if (parts.length >= 1) {
+          repo = 'https://github.com/' + parts[0] + '/' + parts[0];
+        }
+      }
+      if (repo) {
+        document.getElementById('github-link').href = repo;
+      }
+    })();
+
+    window.snakeAudio = {
+      enabled: true,
+      ctx: null,
+      play: function (id) {
+        if (!this.enabled) return;
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!this.ctx) this.ctx = new AudioCtx();
+        var ctx = this.ctx;
+        var tones = [
+          [880, 0.08], [1175, 0.1], [700, 0.08], [220, 0.2],
+          [520, 0.06], [420, 0.05], [640, 0.05], [760, 0.08], [980, 0.08]
+        ];
+        var tone = tones[id] || [440, 0.08];
+        if (id === 2) {
+          [700, 900, 1100].forEach(function (f, i) {
+            var o = ctx.createOscillator();
+            var g = ctx.createGain();
+            o.type = 'square';
+            o.frequency.value = f;
+            g.gain.value = 0.04;
+            o.connect(g);
+            g.connect(ctx.destination);
+            o.start(ctx.currentTime + i * 0.08);
+            o.stop(ctx.currentTime + i * 0.08 + 0.07);
+          });
+          return;
+        }
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.value = tone[0];
+        gain.gain.value = 0.05;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + tone[1]);
+      }
+    };
+
+    var Module = {
+      print: (function () {
+        var el = document.getElementById('game-screen');
+        return function (text) {
+          if (el) {
+            el.textContent += text + '\n';
+          }
+        };
+      })(),
+      printErr: function (text) {
+        console.error(text);
+      },
+      setStatus: function (text) {
+        var badge = document.getElementById('status-badge');
+        if (badge) {
+          badge.textContent = text;
+        }
+      },
+      onRuntimeInitialized: function () {
+        Module.setStatus('Running');
+        applyMode();
+        window.snakeOnReady = function () {
+          Module.setStatus('Running');
+        };
+      }
+    };
+
+    function sendKey(code) {
+      if (Module._web_send_key) {
+        Module._web_send_key(code);
+      }
+    }
+
+    function applyMode() {
+      if (!Module._web_set_mode) {
+        return;
+      }
+      var mode = document.querySelector('input[name="mode"]:checked').value;
+      var diff = parseInt(document.querySelector('input[name="diff"]:checked').value, 10);
+      Module._web_set_mode(mode === 'classic' ? 0 : 1, diff);
+    }
+
+    function bindControls() {
+      document.querySelectorAll('input[name="mode"], input[name="diff"]').forEach(function (el) {
+        el.addEventListener('change', applyMode);
+      });
+      var screen = document.getElementById('game-screen');
+      screen.addEventListener('keydown', function (e) {
+        if (!Module._web_send_key) {
+          return;
+        }
+        e.preventDefault();
+        var code;
+        switch (e.key) {
+          case 'ArrowUp': code = 38; break;
+          case 'ArrowDown': code = 40; break;
+          case 'ArrowLeft': code = 37; break;
+          case 'ArrowRight': code = 39; break;
+          default:
+            if (e.key.length === 1) {
+              code = e.key.toUpperCase().charCodeAt(0);
+            } else {
+              return;
+            }
+        }
+        Module._web_send_key(code);
+      });
+
+      document.querySelectorAll('[data-key]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          sendKey(parseInt(btn.getAttribute('data-key'), 10));
+        });
+      });
+
+      document.getElementById('btn-restart').addEventListener('click', function () {
+        if (Module._web_restart) {
+          Module._web_restart();
+        } else {
+          sendKey(82);
+        }
+      });
+
+      document.getElementById('btn-editor').addEventListener('click', function () {
+        if (Module._web_start_editor) {
+          Module._web_start_editor();
+          Module.setStatus('Editor');
+        }
+      });
+
+      document.getElementById('btn-sound').addEventListener('click', function () {
+        window.snakeAudio.enabled = !window.snakeAudio.enabled;
+        this.textContent = window.snakeAudio.enabled ? 'Sound: ON' : 'Sound: OFF';
+        sendKey(77);
+      });
+    }
+
+    bindControls();
+  </script>
+  <script src="snake.js" async></script>
+</body>
+</html>
