@@ -21,20 +21,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Emscripten
-        run: |
-          git clone https://github.com/emscripten-core/emsdk.git ../emsdk
-          cd ../emsdk
-          ./emsdk install latest
-          ./emsdk activate latest
-          echo "EMSDK=$PWD" >> $GITHUB_ENV
-          echo "$PWD" >> $GITHUB_PATH
-          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
-          echo "$PWD/upstream/bin" >> $GITHUB_PATH
+      - name: Cache Emscripten SDK
+        uses: actions/cache@v4
+        id: emsdk-cache
+        with:
+          path: emsdk
+          key: emsdk-${{ runner.os }}-3.1.64
 
-      - name: Activate Emscripten
+      - name: Install Emscripten SDK
         run: |
-          source "$EMSDK/emsdk_env.sh"
+          if [ ! -f emsdk/emsdk ]; then
+            git clone --depth 1 https://github.com/emscripten-core/emsdk.git emsdk
+            cd emsdk
+            ./emsdk install 3.1.64
+          fi
+          cd emsdk
+          ./emsdk activate 3.1.64
+          echo "EMSDK=${{ github.workspace }}/emsdk" >> $GITHUB_ENV
+
+      - name: Build WASM
+        run: |
+          source "${EMSDK}/emsdk_env.sh"
           emcc --version
           bash build_web.sh
 

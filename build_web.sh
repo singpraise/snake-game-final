@@ -47,8 +47,6 @@ CFLAGS=(
     -Wall
     -Wextra
     -O2
-    -finput-charset=UTF-8
-    -fexec-charset=UTF-8
 )
 
 LDFLAGS=(
