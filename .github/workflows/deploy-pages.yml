@@ -25,12 +25,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache Emscripten
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.EM_CACHE_FOLDER }}
-          key: emsdk-${{ env.EM_VERSION }}-${{ runner.os }}
-
       - name: Setup Emscripten
         uses: emscripten-core/setup-emsdk@v15
         with:
@@ -39,16 +33,26 @@ jobs:
 
       - name: Build WASM
         run: |
+          source "${EMSDK}/emsdk_env.sh"
           emcc --version
-          sed -i 's/\r$//' build_web.sh
-          bash build_web.sh
+          emcc -std=c99 -Wall -Wextra -O2 \
+            main_web.c platform_web.c \
+            init.c snake.c queue.c stack.c board.c memory.c game_ui.c game_config.c obstacles.c score.c audio.c level.c editor.c \
+            -o web/snake.js \
+            -s WASM=1 \
+            -s ENVIRONMENT=web \
+            -s NO_EXIT_RUNTIME=1 \
+            -s ALLOW_MEMORY_GROWTH=1 \
+            -s EXPORTED_FUNCTIONS='["_malloc","_free","_main","_web_send_key","_web_restart","_web_set_mode","_web_start_editor","_web_get_score","_web_is_game_over","_web_get_mode_name","_web_load_level_text"]' \
+            -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap","UTF8ToString","lengthBytesUTF8","stringToUTF8"]' \
+            -s ASSERTIONS=1
 
       - name: Verify web build output
         run: |
           test -f web/index.html
           test -f web/snake.js
           test -f web/snake.wasm
-          echo "Web build OK"
+          ls -la web/snake.*
 
       - name: Inject GitHub repository link
         run: |
