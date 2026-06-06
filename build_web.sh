@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build C Snake Game for the browser (Emscripten → WebAssembly)
 
-set -euo pipefail
+set -eu
 
 cd "$(dirname "$0")"
 
@@ -36,7 +36,7 @@ if ! command -v emcc >/dev/null 2>&1; then
 fi
 
 echo "Using emcc: $(command -v emcc)"
-emcc --version | head -1
+emcc --version 2>&1 | head -1 || true
 echo
 
 CORE_SRC="init.c snake.c queue.c stack.c board.c memory.c game_ui.c game_config.c obstacles.c score.c audio.c level.c editor.c"
