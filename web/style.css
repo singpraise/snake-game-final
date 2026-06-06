@@ -126,7 +126,7 @@ h1 {
   margin-bottom: 8px;
 }
 
-/* ── Game page info layout: 左 20% / 中 60% / 右 20%，下方 Tech Stack 100% ── */
+/* ── Game page info layout: 左 20% / 中 60% / 右 20%，下方說明 100% ── */
 .game-info {
   display: flex;
   flex-direction: column;
@@ -162,49 +162,55 @@ h1 {
   margin-bottom: 10px;
 }
 
-.remote-card .control-list {
-  margin-bottom: 0;
-}
-
-/* 中間：方向鍵十字（直覺對應上下左右） */
+/* 中間：主要遙控器 — 亮藍對比、加大按鈕、大箭頭大字，吸引使用者 */
 .info-col-center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(96, 165, 250, 0.06);
-  border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  padding: 16px;
+  background: linear-gradient(160deg, rgba(96, 165, 250, 0.20), rgba(96, 165, 250, 0.06));
+  border: 1px solid var(--accent-2);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 16px 44px rgba(96, 165, 250, 0.14);
 }
 
 .info-col-center > h2 {
   align-self: flex-start;
+  color: var(--text);
 }
 
 .dpad-guide {
   display: grid;
-  grid-template-columns: repeat(3, minmax(70px, 1fr));
+  grid-template-columns: repeat(3, minmax(110px, 1fr));
   grid-template-areas:
     ". up ."
     "left down right";
-  gap: 10px;
-  margin: 8px 0 16px;
+  gap: 16px;
+  margin: 14px 0 22px;
   width: 100%;
-  max-width: 360px;
+  max-width: 520px;
 }
 
 .dpad-cell {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 10px 8px;
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--muted);
-  font-size: 0.85rem;
+  min-height: 118px;
+  padding: 16px 12px;
+  border: 1px solid #93c5fd;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.38);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dpad-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.5);
 }
 
 .dpad-cell.up    { grid-area: up; }
@@ -212,18 +218,33 @@ h1 {
 .dpad-cell.down  { grid-area: down; }
 .dpad-cell.right { grid-area: right; }
 
-.dpad-cell.down {
-  border-color: var(--accent-2);
-  background: rgba(96, 165, 250, 0.12);
+.dpad-arrow {
+  font-size: 2.4rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.dpad-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.dpad-cell kbd {
+  min-width: 1.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  font-size: 0.9rem;
 }
 
 .action-keys {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px 16px;
-  color: var(--muted);
-  font-size: 0.9rem;
+  gap: 12px 18px;
+  color: var(--text);
+  font-size: 1rem;
 }
 
 .action-keys span {
@@ -236,17 +257,37 @@ h1 {
   margin-bottom: 0;
 }
 
-/* 最下方 Tech Stack：橫向鋪滿 */
-.info-techstack {
-  border-top: 1px solid var(--panel-border);
-  padding-top: 16px;
+/* 底部說明卡：Level Editor / Tech Stack — 深灰底白字，100% 橫放 */
+.bottom-card {
+  background: #1f2530;
+  border: 1px solid #2c3444;
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: #ffffff;
 }
 
-.info-techstack h2 {
+.bottom-card h2 {
   margin: 0 0 12px;
+  color: #ffffff;
 }
 
-.info-techstack .tech-list {
+.inline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #ffffff;
+}
+
+.inline-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bottom-card .tech-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 14px;
@@ -255,12 +296,12 @@ h1 {
   list-style: none;
 }
 
-.info-techstack .tech-list li {
+.bottom-card .tech-list li {
   padding: 6px 12px;
-  border: 1px solid var(--panel-border);
+  border: 1px solid #3a455c;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
   font-size: 0.85rem;
 }
 

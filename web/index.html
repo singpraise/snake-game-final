@@ -59,27 +59,31 @@
                 <label><input type="radio" name="diff" value="3"> 最難</label>
               </div>
             </div>
-
-            <div class="remote-card">
-              <h2>Level Editor</h2>
-              <ul class="control-list">
-                <li><kbd>1-5</kbd> Select tool</li>
-                <li><kbd>W X A D</kbd> Move cursor</li>
-                <li><kbd>Space</kbd> Place tile</li>
-                <li><kbd>H</kbd> Snake direction</li>
-                <li><kbd>S</kbd> Save | <kbd>L</kbd> Load</li>
-                <li><kbd>T</kbd> Test play level</li>
-              </ul>
-            </div>
           </div>
 
           <div class="info-col-center">
             <h2>Controls</h2>
             <div class="dpad-guide">
-              <div class="dpad-cell up"><kbd>W</kbd><kbd>↑</kbd><span>Up</span></div>
-              <div class="dpad-cell left"><kbd>A</kbd><kbd>←</kbd><span>Left</span></div>
-              <div class="dpad-cell down"><kbd>S</kbd><kbd>↓</kbd><span>Down</span></div>
-              <div class="dpad-cell right"><kbd>D</kbd><kbd>→</kbd><span>Right</span></div>
+              <div class="dpad-cell up">
+                <span class="dpad-arrow">↑</span>
+                <span class="dpad-name">Up</span>
+                <kbd>W</kbd>
+              </div>
+              <div class="dpad-cell left">
+                <span class="dpad-arrow">←</span>
+                <span class="dpad-name">Left</span>
+                <kbd>A</kbd>
+              </div>
+              <div class="dpad-cell down">
+                <span class="dpad-arrow">↓</span>
+                <span class="dpad-name">Down</span>
+                <kbd>S</kbd>
+              </div>
+              <div class="dpad-cell right">
+                <span class="dpad-arrow">→</span>
+                <span class="dpad-name">Right</span>
+                <kbd>D</kbd>
+              </div>
             </div>
             <div class="action-keys">
               <span><kbd>U</kbd> Undo</span>
@@ -103,7 +107,19 @@
           </div>
         </div>
 
-        <div class="info-techstack">
+        <div class="bottom-card">
+          <h2>Level Editor</h2>
+          <ul class="control-list inline-list">
+            <li><kbd>1-5</kbd> Select tool</li>
+            <li><kbd>W X A D</kbd> Move cursor</li>
+            <li><kbd>Space</kbd> Place tile</li>
+            <li><kbd>H</kbd> Snake direction</li>
+            <li><kbd>S</kbd> Save | <kbd>L</kbd> Load</li>
+            <li><kbd>T</kbd> Test play level</li>
+          </ul>
+        </div>
+
+        <div class="bottom-card">
           <h2>Tech Stack</h2>
           <ul class="tech-list">
             <li>Pointer &amp; malloc/free</li>
