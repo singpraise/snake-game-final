@@ -418,17 +418,27 @@ h1 {
   font-weight: 600;
 }
 
+.game-panel {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
 .terminal {
-  min-height: 420px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   margin: 0;
   padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   overflow: auto;
   border-radius: 14px;
   background: var(--terminal-bg);
   border: 1px solid #1b2742;
   color: #d9f99d;
   font-family: "JetBrains Mono", Consolas, monospace;
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 1.9vw, 1.2rem);
   line-height: 1.35;
   white-space: pre;
   outline: none;
