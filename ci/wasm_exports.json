@@ -1,0 +1,13 @@
+[
+  "_malloc",
+  "_free",
+  "_main",
+  "_web_send_key",
+  "_web_restart",
+  "_web_set_mode",
+  "_web_start_editor",
+  "_web_get_score",
+  "_web_is_game_over",
+  "_web_get_mode_name",
+  "_web_load_level_text"
+]
