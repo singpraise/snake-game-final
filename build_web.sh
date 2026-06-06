@@ -28,8 +28,6 @@ emcc -std=c99 -O2 \
     -s ENVIRONMENT=web \
     -s NO_EXIT_RUNTIME=1 \
     -s ALLOW_MEMORY_GROWTH=1 \
-    -s EXPORTED_FUNCTIONS=@ci/wasm_exports.json \
-    -s 'EXPORTED_RUNTIME_METHODS=["ccall","cwrap","UTF8ToString","lengthBytesUTF8","stringToUTF8"]' \
     -s ASSERTIONS=1
 
 echo "[OK] Web build complete."
