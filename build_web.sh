@@ -21,13 +21,14 @@ CORE_SRC="init.c snake.c queue.c stack.c board.c memory.c game_ui.c game_config.
 WEB_SRC="main_web.c platform_web.c"
 
 echo "Compiling to web/snake.js + web/snake.wasm ..."
-emcc -std=c99 -O2 \
+    emcc -std=gnu99 -O2 \
     $WEB_SRC $CORE_SRC \
     -o web/snake.js \
     -s WASM=1 \
     -s ENVIRONMENT=web \
     -s NO_EXIT_RUNTIME=1 \
     -s ALLOW_MEMORY_GROWTH=1 \
+    -s ASYNCIFY=1 \
     -s ASSERTIONS=1
 
 echo "[OK] Web build complete."

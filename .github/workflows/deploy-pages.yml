@@ -28,7 +28,7 @@ jobs:
           source "$EMSDK/emsdk_env.sh" 2>/dev/null || true
           emcc --version | head -1
           set +e
-          emcc -std=c99 -O2 \
+          emcc -std=gnu99 -O2 \
             main_web.c platform_web.c \
             init.c snake.c queue.c stack.c board.c memory.c game_ui.c game_config.c obstacles.c score.c audio.c level.c editor.c \
             -o web/snake.js \

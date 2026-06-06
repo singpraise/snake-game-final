@@ -28,7 +28,7 @@ echo.
 
 set CORE=init.c snake.c queue.c stack.c board.c memory.c game_ui.c game_config.c obstacles.c score.c audio.c level.c editor.c
 set WEB=main_web.c platform_web.c
-set CFLAGS=-std=c99 -Wall -Wextra -O2 -finput-charset=UTF-8 -fexec-charset=UTF-8
+set CFLAGS=-std=gnu99 -Wall -Wextra -O2
 
 echo Compiling...
 emcc %CFLAGS% %WEB% %CORE% -o web\snake.js ^
@@ -36,8 +36,9 @@ emcc %CFLAGS% %WEB% %CORE% -o web\snake.js ^
     -s ENVIRONMENT=web ^
     -s NO_EXIT_RUNTIME=1 ^
     -s ALLOW_MEMORY_GROWTH=1 ^
-    -s EXPORTED_FUNCTIONS=["_main","_web_send_key","_web_restart","_web_set_mode","_web_start_editor","_web_get_score","_web_is_game_over","_web_get_mode_name","_web_load_level_text"] ^
-    -s EXPORTED_RUNTIME_METHODS=["ccall","cwrap"] ^
+    -s ASYNCIFY=1 ^
+    -s EXPORTED_FUNCTIONS=["_malloc","_free","_main","_web_send_key","_web_restart","_web_set_mode","_web_start_editor","_web_get_score","_web_is_game_over","_web_get_mode_name","_web_load_level_text"] ^
+    -s EXPORTED_RUNTIME_METHODS=["ccall","cwrap","UTF8ToString","lengthBytesUTF8","stringToUTF8"] ^
     -s ASSERTIONS=1
 
 if errorlevel 1 (

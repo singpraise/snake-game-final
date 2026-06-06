@@ -58,7 +58,7 @@ static void handle_direction_key(int ch, GameState *game)
     case 's': case 'S': case 40: game_queue_direction(game, DIR_DOWN);  break;
     case 'a': case 'A': case 37: game_queue_direction(game, DIR_LEFT);  break;
     case 'd': case 'D': case 39: game_queue_direction(game, DIR_RIGHT); break;
-    case 'u': case 'U': case 85: game_undo(game);                       break;
+    case 'u': case 'U': game_undo(game);                                break;
     default: break;
     }
 }
