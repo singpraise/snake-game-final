@@ -39,7 +39,7 @@
           <span id="status-badge" class="badge">Loading WASM...</span>
         </div>
         <pre id="game-screen" class="terminal" aria-label="Snake game screen" tabindex="0"></pre>
-        <p class="hint">Click the game screen, then use keyboard. Touch devices can use the buttons below.</p>
+        <p class="hint">Click the game screen and use the keyboard, or tap the Controls buttons below (works on touch devices).</p>
       </section>
 
       <aside class="panel info-panel game-info">
@@ -64,33 +64,33 @@
           <div class="info-col-center">
             <h2>Controls</h2>
             <div class="dpad-guide">
-              <div class="dpad-cell up">
+              <button type="button" class="dpad-cell up" data-key="38" aria-label="Up">
                 <span class="dpad-arrow">↑</span>
                 <span class="dpad-name">Up</span>
                 <kbd>W</kbd>
-              </div>
-              <div class="dpad-cell left">
+              </button>
+              <button type="button" class="dpad-cell left" data-key="37" aria-label="Left">
                 <span class="dpad-arrow">←</span>
                 <span class="dpad-name">Left</span>
                 <kbd>A</kbd>
-              </div>
-              <div class="dpad-cell down">
+              </button>
+              <button type="button" class="dpad-cell down" data-key="40" aria-label="Down">
                 <span class="dpad-arrow">↓</span>
                 <span class="dpad-name">Down</span>
                 <kbd>S</kbd>
-              </div>
-              <div class="dpad-cell right">
+              </button>
+              <button type="button" class="dpad-cell right" data-key="39" aria-label="Right">
                 <span class="dpad-arrow">→</span>
                 <span class="dpad-name">Right</span>
                 <kbd>D</kbd>
-              </div>
+              </button>
             </div>
             <div class="action-keys">
-              <span><kbd>U</kbd> Undo</span>
-              <span><kbd>P</kbd> Pause</span>
-              <span><kbd>R</kbd> Restart</span>
-              <span><kbd>M</kbd> Mute</span>
-              <span><kbd>Q</kbd> Quit loop</span>
+              <button type="button" class="action-key" data-key="85"><kbd>U</kbd> Undo</button>
+              <button type="button" class="action-key" data-key="80"><kbd>P</kbd> Pause</button>
+              <button type="button" class="action-key" data-key="82"><kbd>R</kbd> Restart</button>
+              <button type="button" class="action-key" data-key="77"><kbd>M</kbd> Mute</button>
+              <button type="button" class="action-key" data-key="81"><kbd>Q</kbd> Quit loop</button>
             </div>
           </div>
 
@@ -131,20 +131,6 @@
         </div>
       </aside>
     </main>
-
-    <section class="touch-controls" aria-label="Touch controls">
-      <button type="button" class="touch-btn" data-key="85">U</button>
-      <div class="dpad">
-        <button type="button" class="touch-btn" data-key="38">↑</button>
-        <div class="dpad-row">
-          <button type="button" class="touch-btn" data-key="37">←</button>
-          <button type="button" class="touch-btn" data-key="40">↓</button>
-          <button type="button" class="touch-btn" data-key="39">→</button>
-        </div>
-      </div>
-      <button type="button" class="touch-btn" data-key="80">P</button>
-      <button type="button" class="touch-btn" data-key="82">R</button>
-    </section>
 
     <footer class="footer">
       <p>Native Windows build: compile with <code>build.bat</code> · Web build: <code>build_web.sh</code></p>
