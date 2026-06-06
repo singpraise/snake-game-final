@@ -127,10 +127,11 @@ h1 {
 }
 
 /* ── Game page info layout: 左 20% / 中 60% / 右 20%，下方說明 100% ── */
-.game-info {
+.panel.game-info {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .info-grid {
@@ -310,6 +311,26 @@ h1 {
 
 /* 手機 / 窄螢幕：三欄改為直向堆疊，遙控器置中滿版 */
 @media (max-width: 820px) {
+  .page {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .panel.game-info,
+  .info-grid,
+  .info-col-left,
+  .info-col-center,
+  .info-col-right,
+  .remote-card,
+  .bottom-card {
+    width: 100%;
+  }
+
   .info-grid {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -317,6 +338,7 @@ h1 {
 
   .info-col-center {
     order: -1;            /* 遙控器移到主畫面正下方 */
+    align-items: stretch; /* 子元素撐滿寬度 */
     padding: 14px 10px;
   }
 
