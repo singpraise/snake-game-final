@@ -327,13 +327,41 @@ h1 {
   .info-col-center,
   .info-col-right,
   .remote-card,
+  .setting-card,
   .bottom-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .info-col-left,
+  .info-col-right {
+    display: block;
+    align-self: stretch;
+  }
+
+  .setting-card {
+    padding: 16px 18px;   /* 與 bottom-card 一致 */
+  }
+
+  .setting-card .mode-row {
+    width: 100%;
+    gap: 14px 20px;
+  }
+
+  .setting-card .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     width: 100%;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 
   .info-col-center {

@@ -6,7 +6,7 @@
   <title>C Snake Game Final — WebAssembly</title>
   <meta name="description" content="C Snake Game Final - enhanced snake with 4 speed levels, editor, and WebAssembly.">
   <meta name="github-repo" content="https://github.com/singpraise/snake-game-final">
-  <link rel="stylesheet" href="style.css?v=20260607">
+  <link rel="stylesheet" href="style.css?v=20260607b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -44,12 +44,14 @@
       <aside class="panel game-info">
         <div class="info-grid">
           <div class="info-col-left">
-            <div class="remote-card">
+            <div class="remote-card setting-card">
               <h2>Mode</h2>
               <div class="mode-row">
                 <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
                 <label><input type="radio" name="mode" value="classic"> Classic</label>
               </div>
+            </div>
+            <div class="remote-card setting-card">
               <h2>Speed</h2>
               <div class="mode-row" id="difficulty-row">
                 <label><input type="radio" name="diff" value="0"> 簡單</label>
@@ -86,7 +88,7 @@
           </div>
 
           <div class="info-col-right">
-            <div class="remote-card">
+            <div class="remote-card setting-card">
               <h2>Legend</h2>
               <ul class="legend">
                 <li><span class="glyph">@</span> Head</li>
