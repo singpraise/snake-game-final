@@ -171,7 +171,7 @@ h1 {
   background: linear-gradient(160deg, rgba(96, 165, 250, 0.20), rgba(96, 165, 250, 0.06));
   border: 1px solid var(--accent-2);
   border-radius: 18px;
-  padding: 22px;
+  padding: 18px;
   box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 16px 44px rgba(96, 165, 250, 0.14);
 }
 
@@ -182,14 +182,14 @@ h1 {
 
 .dpad-guide {
   display: grid;
-  grid-template-columns: repeat(3, minmax(110px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-areas:
     ". up ."
     "left down right";
-  gap: 16px;
-  margin: 14px 0 22px;
+  gap: 12px;
+  margin: 10px auto 16px;
   width: 100%;
-  max-width: 520px;
+  max-width: 320px;
 }
 
 .dpad-cell {
@@ -197,11 +197,12 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 118px;
-  padding: 16px 12px;
+  gap: 4px;
+  min-width: 0;
+  min-height: 84px;
+  padding: 10px 6px;
   border: 1px solid #93c5fd;
-  border-radius: 18px;
+  border-radius: 16px;
   background: linear-gradient(160deg, #3b82f6, #2563eb);
   color: #ffffff;
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.38);
@@ -219,23 +220,23 @@ h1 {
 .dpad-cell.right { grid-area: right; }
 
 .dpad-arrow {
-  font-size: 2.4rem;
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
   line-height: 1;
   font-weight: 700;
 }
 
 .dpad-name {
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 2.6vw, 1rem);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .dpad-cell kbd {
-  min-width: 1.8rem;
+  min-width: 1.6rem;
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .action-keys {
@@ -305,9 +306,56 @@ h1 {
   font-size: 0.85rem;
 }
 
-@media (max-width: 760px) {
+/* 平板：左右欄變窄、中間維持加大 */
+@media (max-width: 980px) {
+  .info-grid {
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 14px;
+  }
+}
+
+/* 手機：三欄改為直向堆疊，遙控器置中、不超出畫面 */
+@media (max-width: 680px) {
   .info-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .info-col-center {
+    padding: 16px 12px;
+  }
+
+  .dpad-guide {
+    max-width: 280px;
+    gap: 10px;
+  }
+
+  .dpad-cell {
+    min-height: 72px;
+    border-radius: 14px;
+  }
+
+  .action-keys {
+    font-size: 0.9rem;
+    gap: 8px 12px;
+  }
+
+  .bottom-card .tech-list,
+  .inline-list {
+    gap: 8px 12px;
+  }
+}
+
+/* 小手機：再縮一階，避免任何橫向溢出 */
+@media (max-width: 380px) {
+  .dpad-guide {
+    max-width: 240px;
+    gap: 8px;
+  }
+
+  .dpad-cell {
+    min-height: 64px;
+    padding: 8px 4px;
   }
 }
 
