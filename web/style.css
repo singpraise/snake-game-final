@@ -95,9 +95,35 @@ h1 {
 }
 
 .layout {
-  display: grid;
-  grid-template-columns: 1.4fr 0.9fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+}
+
+.info-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px 28px;
+  align-items: start;
+}
+
+.info-block {
+  min-width: 0;
+}
+
+.info-block-wide {
+  grid-column: span 2;
+}
+
+.info-block h2 {
+  margin-top: 4px;
+}
+
+.info-block .control-list,
+.info-block .legend,
+.info-block .tech-list,
+.info-block .mode-row {
+  margin-bottom: 8px;
 }
 
 .panel {

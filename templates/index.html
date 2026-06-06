@@ -42,45 +42,51 @@
       </section>
 
       <aside class="panel info-panel">
-        <h2>Flask Backend</h2>
-        <p id="flask-badge" class="badge">Checking API...</p>
+        <div class="info-block">
+          <h2>Flask Backend</h2>
+          <p id="flask-badge" class="badge">Checking API...</p>
 
-        <h2>Server Leaderboard</h2>
-        <label for="player-name">Player name</label>
-        <input id="player-name" class="text-input" type="text" maxlength="32" placeholder="Your name" value="Player">
-        <button id="btn-submit-score" class="btn btn-primary btn-block" type="button">Submit Score to Server</button>
-        <ol id="server-scores" class="score-list"></ol>
+          <h2>Mode</h2>
+          <div class="mode-row">
+            <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
+            <label><input type="radio" name="mode" value="classic"> Classic</label>
+          </div>
+          <h2>Speed</h2>
+          <div class="mode-row" id="difficulty-row">
+            <label><input type="radio" name="diff" value="0"> 簡單</label>
+            <label><input type="radio" name="diff" value="1" checked> 中間</label>
+            <label><input type="radio" name="diff" value="2"> 更難</label>
+            <label><input type="radio" name="diff" value="3"> 最難</label>
+          </div>
 
-        <h2>Custom Levels (API)</h2>
-        <select id="level-select" class="text-input"></select>
-        <button id="btn-load-level" class="btn btn-primary btn-block" type="button">Load Level into Game</button>
-
-        <h2>Level Editor (Flask)</h2>
-        <label for="level-filename">Filename</label>
-        <input id="level-filename" class="text-input" type="text" maxlength="64" placeholder="mylevel.lvl" value="example.lvl">
-        <textarea id="level-content" class="level-editor" rows="14" spellcheck="false" placeholder="# C Snake Level v1&#10;name=My Level&#10;width=20&#10;height=15&#10;---&#10;...................."></textarea>
-        <button id="btn-fetch-level" class="btn btn-github btn-block" type="button">Load Selected to Editor</button>
-        <button id="btn-save-level" class="btn btn-primary btn-block" type="button">Save Level to Server</button>
-
-        <h2>Mode</h2>
-        <div class="mode-row">
-          <label><input type="radio" name="mode" value="enhanced" checked> Enhanced</label>
-          <label><input type="radio" name="mode" value="classic"> Classic</label>
-        </div>
-        <h2>Speed</h2>
-        <div class="mode-row" id="difficulty-row">
-          <label><input type="radio" name="diff" value="0"> 簡單</label>
-          <label><input type="radio" name="diff" value="1" checked> 中間</label>
-          <label><input type="radio" name="diff" value="2"> 更難</label>
-          <label><input type="radio" name="diff" value="3"> 最難</label>
+          <h2>Controls</h2>
+          <ul class="control-list">
+            <li><kbd>W</kbd> <kbd>↑</kbd> Up · <kbd>S</kbd> <kbd>↓</kbd> Down</li>
+            <li><kbd>A</kbd> <kbd>←</kbd> Left · <kbd>D</kbd> <kbd>→</kbd> Right</li>
+            <li><kbd>U</kbd> Undo · <kbd>P</kbd> Pause · <kbd>M</kbd> Mute</li>
+          </ul>
         </div>
 
-        <h2>Controls</h2>
-        <ul class="control-list">
-          <li><kbd>W</kbd> <kbd>↑</kbd> Up · <kbd>S</kbd> <kbd>↓</kbd> Down</li>
-          <li><kbd>A</kbd> <kbd>←</kbd> Left · <kbd>D</kbd> <kbd>→</kbd> Right</li>
-          <li><kbd>U</kbd> Undo · <kbd>P</kbd> Pause · <kbd>M</kbd> Mute</li>
-        </ul>
+        <div class="info-block">
+          <h2>Server Leaderboard</h2>
+          <label for="player-name">Player name</label>
+          <input id="player-name" class="text-input" type="text" maxlength="32" placeholder="Your name" value="Player">
+          <button id="btn-submit-score" class="btn btn-primary btn-block" type="button">Submit Score to Server</button>
+          <ol id="server-scores" class="score-list"></ol>
+
+          <h2>Custom Levels (API)</h2>
+          <select id="level-select" class="text-input"></select>
+          <button id="btn-load-level" class="btn btn-primary btn-block" type="button">Load Level into Game</button>
+        </div>
+
+        <div class="info-block info-block-wide">
+          <h2>Level Editor (Flask)</h2>
+          <label for="level-filename">Filename</label>
+          <input id="level-filename" class="text-input" type="text" maxlength="64" placeholder="mylevel.lvl" value="example.lvl">
+          <textarea id="level-content" class="level-editor" rows="14" spellcheck="false" placeholder="# C Snake Level v1&#10;name=My Level&#10;width=20&#10;height=15&#10;---&#10;...................."></textarea>
+          <button id="btn-fetch-level" class="btn btn-github btn-block" type="button">Load Selected to Editor</button>
+          <button id="btn-save-level" class="btn btn-primary btn-block" type="button">Save Level to Server</button>
+        </div>
       </aside>
     </main>
 

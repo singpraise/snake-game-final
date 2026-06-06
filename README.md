@@ -35,6 +35,7 @@
 8. [編譯與建置](#8-編譯與建置)
 9. [常見問題](#9-常見問題)
 10. [遊戲參數](#10-遊戲參數)
+11. [附錄：Cursor 協作紀錄](#附錄cursor-協作紀錄prompt-log)（→ [`PROMPT_LOG.md`](PROMPT_LOG.md)）
 
 ---
 
@@ -616,6 +617,27 @@ pacman -S mingw-w64-ucrt-x86_64-gcc
 | **How to Run** | PowerShell / Git Bash / 雙擊 run.bat / GitHub Pages 網頁 |
 | **Web / WASM** | Emscripten 編譯，核心 C 原始碼不變，僅替換平台層 |
 | **Flask 後端** | 路由、關卡 API、伺服器排行榜（`app.py`） |
+
+---
+
+## 附錄：Cursor 協作紀錄（Prompt Log）
+
+完整的 **Cursor AI Prompt 紀錄** 與 **除錯歷程** 見 [`PROMPT_LOG.md`](PROMPT_LOG.md)，內容包含：
+
+- 各開發階段的關鍵 Prompt 與 AI 產出、**人工檢查重點**
+- **GitHub Actions 部署 14 次失敗 → 第 15 次成功** 的完整除錯歷程
+- 對應「常見地雷」（Memory Leak / Segfault / 陣列越界 / malloc 錯誤）的防範成果
+
+> 開發原則：**不盲目複製 AI 生成的程式碼，務必親自編譯、執行、讀錯誤訊息逐行驗證。**
+
+### 協作方式摘要
+
+| 項目 | 說明 |
+|------|------|
+| AI 工具 | Cursor（Agent 模式） |
+| AI 負責 | 架構發想、樣板程式、文件撰寫、CI 設定 |
+| 人工負責 | 功能驗證、記憶體安全檢查、跨平台部署除錯、逐行審查 |
+| 最佳實例 | GitHub Actions 連續失敗，靠**讀真實錯誤訊息**而非換工具解決（CRLF → emcc PATH → `-std=gnu99` → 重複 case） |
 
 ---
 
