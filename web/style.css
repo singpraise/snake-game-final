@@ -171,7 +171,7 @@ h1 {
   background: linear-gradient(160deg, rgba(96, 165, 250, 0.20), rgba(96, 165, 250, 0.06));
   border: 1px solid var(--accent-2);
   border-radius: 18px;
-  padding: 18px;
+  padding: 14px;
   box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 16px 44px rgba(96, 165, 250, 0.14);
 }
 
@@ -186,10 +186,10 @@ h1 {
   grid-template-areas:
     ". up ."
     "left down right";
-  gap: 12px;
-  margin: 10px auto 16px;
+  gap: 8px;
+  margin: 6px auto 12px;
   width: 100%;
-  max-width: 320px;
+  max-width: 270px;
 }
 
 .dpad-cell {
@@ -197,21 +197,21 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
-  min-height: 84px;
-  padding: 10px 6px;
+  min-height: 58px;
+  padding: 8px 6px;
   border: 1px solid #93c5fd;
-  border-radius: 16px;
+  border-radius: 14px;
   background: linear-gradient(160deg, #3b82f6, #2563eb);
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.38);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .dpad-cell:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.5);
 }
 
 .dpad-cell.up    { grid-area: up; }
@@ -220,23 +220,24 @@ h1 {
 .dpad-cell.right { grid-area: right; }
 
 .dpad-arrow {
-  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
   line-height: 1;
   font-weight: 700;
 }
 
 .dpad-name {
-  font-size: clamp(0.8rem, 2.6vw, 1rem);
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .dpad-cell kbd {
-  min-width: 1.6rem;
+  min-width: 1.4rem;
+  padding: 1px 5px;
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 .action-keys {
